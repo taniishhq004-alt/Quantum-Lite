@@ -1,0 +1,22 @@
+# Compiled build directories
+build/
+backend/build/
+out/
+cmake-build-*/
+
+# Executables and object files
+*.exe
+*.obj
+*.o
+*.a
+*.dll
+*.pdb
+
+# IDE & OS artifacts
+.vscode/.browse.c_cpp.db*
+.DS_Store
+Thumbs.db
+
+# Downloaded temporary artifacts
+*.zip
+!Quantum-Lite.zip

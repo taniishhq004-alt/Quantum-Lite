@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Lite — Quantum Circuit Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+</head>
+<body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar glass">
+        <div class="nav-brand">
+            <div class="brand-logo" aria-hidden="true">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="15" stroke="url(#qlGrad)" stroke-width="2" />
+                    <ellipse cx="18" cy="18" rx="15" ry="6" transform="rotate(35 18 18)" stroke="#00e5ff" stroke-width="1.4" stroke-opacity="0.75" />
+                    <ellipse cx="18" cy="18" rx="15" ry="6" transform="rotate(-35 18 18)" stroke="#8b5cf6" stroke-width="1.4" stroke-opacity="0.75" />
+                    <circle cx="18" cy="18" r="3.5" fill="#00e5ff" />
+                    <defs>
+                        <linearGradient id="qlGrad" x1="3" y1="3" x2="33" y2="33" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#00e5ff" />
+                            <stop offset="1" stop-color="#8b5cf6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div>
+                <span class="brand-title">Quantum Lite</span>
+                <span class="brand-subtitle">C++ State-Vector Simulator</span>
+            </div>
+        </div>
+
+        <nav class="nav-links" aria-label="Primary Navigation">
+            <a href="#home" class="nav-link active" data-section="home">Dashboard</a>
+            <a href="#builder" class="nav-link" data-section="builder">Circuit Builder</a>
+            <a href="#results" class="nav-link" data-section="results">Simulation Results</a>
+            <a href="#library" class="nav-link" data-section="library">Gate Library</a>
+            <a href="#about" class="nav-link" data-section="about">About</a>
+        </nav>
+
+        <div class="nav-status">
+            <div id="backendStatusBadge" class="status-pill status-checking" title="C++ Crow Backend Health">
+                <span class="status-dot"></span>
+                <span id="backendStatusText">Connecting C++ API...</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- SECTION 1: HOME / DASHBOARD -->
+        <section id="home" class="section hero-section">
+            <div class="hero-content">
+                <div class="eyebrow-pill">JIIT BCA Minor Project &bull; C++ Using OOPS (23B65CA215)</div>
+                <h1 class="hero-title">
+                    Explore Quantum Computing<br />
+                    <span class="gradient-text">One Gate at a Time</span>
+                </h1>
+                <p class="hero-description">
+                    <strong>Quantum Lite</strong> is an interactive quantum circuit simulator powered by an
+                    Object-Oriented C++17 state-vector simulation engine and the Crow REST API. Build multi-qubit
+                    circuits, entangle qubits with CNOT gates, and observe complex probability amplitudes in real time.
+                </p>
+                <div class="hero-actions">
+                    <button id="startSimulationBtn" class="btn btn-primary btn-lg">
+                        <span>Start Simulation</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                        </svg>
+                    </button>
+                    <button id="exploreGatesBtn" class="btn btn-secondary btn-lg">Explore Quantum Gates</button>
+                </div>
+
+                <div class="hero-metrics">
+                    <div class="metric-card glass">
+                        <span class="metric-value">C++17</span>
+                        <span class="metric-label">OOP Simulation Engine</span>
+                    </div>
+                    <div class="metric-card glass">
+                        <span class="metric-value">5 Gates</span>
+                        <span class="metric-label">H, X, Y, Z &amp; CNOT</span>
+                    </div>
+                    <div class="metric-card glass">
+                        <span class="metric-value">2<sup>n</sup></span>
+                        <span class="metric-label">Exact Complex State Vector</span>
+                    </div>
+                    <div class="metric-card glass">
+                        <span class="metric-value">REST</span>
+                        <span class="metric-label">Crow JSON API</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual glass">
+                <div class="visual-header">
+                    <span class="dot red"></span><span class="dot amber"></span><span class="dot green"></span>
+                    <span class="visual-title">Live Workflow Architecture</span>
+                </div>
+                <div class="workflow-steps">
+                    <div class="wf-step">
+                        <div class="wf-num">01</div>
+                        <div>
+                            <h4>Configure Qubits</h4>
+                            <p>Initialize multi-qubit registers in |0&rang; or |1&rang; basis states.</p>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-num">02</div>
+                        <div>
+                            <h4>Design Circuit</h4>
+                            <p>Drag or click to place Hadamard, Pauli, and Controlled-NOT gates.</p>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-num">03</div>
+                        <div>
+                            <h4>C++ State-Vector Execution</h4>
+                            <p>JSON circuit config is validated and simulated by C++ OOP classes.</p>
+                        </div>
+                    </div>
+                    <div class="wf-step">
+                        <div class="wf-num">04</div>
+                        <div>
+                            <h4>Inspect Amplitudes &amp; Probabilities</h4>
+                            <p>Visualize |&psi;&rang;, |&alpha;|<sup>2</sup> histograms, and step-by-step gate effects.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: CIRCUIT BUILDER -->
+        <section id="builder" class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Interactive Quantum Circuit Builder</h2>
+                    <p class="section-subtitle">
+                        Drag gates onto qubit wires or click a gate then click any grid cell. Click a qubit state pill to toggle |0&rang; / |1&rang;.
+                    </p>
+                </div>
+                <div class="preset-bar">
+                    <span class="preset-label">Quick Presets:</span>
+                    <button class="btn-chip" data-preset="superposition">Superposition (H)</button>
+                    <button class="btn-chip" data-preset="bitflip">Bit Flip (X)</button>
+                    <button class="btn-chip" data-preset="bell">Bell State (H+CNOT)</button>
+                    <button class="btn-chip" data-preset="phase">Phase Interference</button>
+                    <button class="btn-chip" data-preset="ghz">3-Qubit GHZ</button>
+                </div>
+            </div>
+
+            <div class="builder-workspace glass">
+                <!-- Controls Toolbar -->
+                <div class="builder-toolbar">
+                    <div class="toolbar-group">
+                        <button id="addQubitBtn" class="btn btn-outline" title="Add Qubit (up to 8)">+ Add Qubit</button>
+                        <button id="removeQubitBtn" class="btn btn-outline" title="Remove Last Qubit">- Remove Qubit</button>
+                        <button id="addColumnBtn" class="btn btn-outline" title="Add Time Step Column">+ Step Column</button>
+                    </div>
+                    <div class="toolbar-stats">
+                        <span class="stat-pill">Qubits: <strong id="qubitCountDisplay">2</strong></span>
+                        <span class="stat-pill">Gates: <strong id="gateCountDisplay">0</strong></span>
+                        <span class="stat-pill">Depth: <strong id="circuitDepthDisplay">0</strong></span>
+                    </div>
+                    <div class="toolbar-group">
+                        <button id="saveCircuitBtn" class="btn btn-secondary">Validate Circuit</button>
+                        <button id="resetCircuitBtn" class="btn btn-danger-outline">Reset</button>
+                        <button id="executeCircuitBtn" class="btn btn-primary">
+                            <span>Execute Circuit</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gate Selection Palette -->
+                <div class="gate-palette-bar">
+                    <span class="palette-label">Quantum Gates:</span>
+                    <div id="gatePalette" class="gate-palette">
+                        <button class="gate-chip gate-H" draggable="true" data-gate="H" title="Hadamard Gate — Equal Superposition">
+                            <span class="gate-sym">H</span>
+                            <span class="gate-lbl">Hadamard</span>
+                        </button>
+                        <button class="gate-chip gate-X" draggable="true" data-gate="X" title="Pauli-X Gate — Quantum NOT / Bit Flip">
+                            <span class="gate-sym">X</span>
+                            <span class="gate-lbl">Pauli-X</span>
+                        </button>
+                        <button class="gate-chip gate-Y" draggable="true" data-gate="Y" title="Pauli-Y Gate — Bit + Phase Rotation">
+                            <span class="gate-sym">Y</span>
+                            <span class="gate-lbl">Pauli-Y</span>
+                        </button>
+                        <button class="gate-chip gate-Z" draggable="true" data-gate="Z" title="Pauli-Z Gate — Phase Flip">
+                            <span class="gate-sym">Z</span>
+                            <span class="gate-lbl">Pauli-Z</span>
+                        </button>
+                        <button class="gate-chip gate-CNOT" draggable="true" data-gate="CNOT" title="Controlled-NOT Gate — Entanglement (2 Qubits)">
+                            <span class="gate-sym">CNOT</span>
+                            <span class="gate-lbl">Controlled-NOT</span>
+                        </button>
+                    </div>
+                    <div id="placementHint" class="placement-hint">
+                        Tip: Select or drag a gate onto the circuit wires below. Click any placed gate to remove it.
+                    </div>
+                </div>
+
+                <!-- Interactive Circuit Canvas -->
+                <div class="circuit-canvas-wrapper">
+                    <div id="circuitGrid" class="circuit-grid" role="region" aria-label="Quantum Circuit Grid">
+                        <!-- Rendered dynamically by circuit.js -->
+                    </div>
+                </div>
+
+                <!-- Live Feedback Toast inside Builder -->
+                <div id="builderAlert" class="builder-alert hidden" role="status"></div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: SIMULATION RESULTS -->
+        <section id="results" class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Simulation Results &amp; State Analysis</h2>
+                    <p class="section-subtitle">
+                        Exact complex state vector, Dirac representation, measurement probabilities, and per-gate execution trace computed by C++.
+                    </p>
+                </div>
+                <div id="normStatusBadge" class="norm-badge hidden">
+                    &Sigma;|&alpha;<sub>i</sub>|<sup>2</sup> = <span id="normSumValue">1.0000</span>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="results-summary-grid">
+                <div class="result-card glass">
+                    <span class="rc-label">Initial Quantum State</span>
+                    <div id="initialStateDirac" class="rc-dirac mono">|00&rang;</div>
+                </div>
+                <div class="result-card glass">
+                    <span class="rc-label">Final Quantum State |&psi;&rang;</span>
+                    <div id="finalStateDirac" class="rc-dirac mono gradient-text">Run a simulation to view |&psi;&rang;</div>
+                </div>
+                <div class="result-card glass">
+                    <span class="rc-label">Circuit Execution Summary</span>
+                    <div id="executionSummary" class="rc-summary">No simulation executed yet.</div>
+                </div>
+            </div>
+
+            <!-- Charts & Table Grid -->
+            <div class="results-main-grid">
+                <div class="panel glass">
+                    <div class="panel-header">
+                        <h3>Measurement Probability Distribution</h3>
+                        <span class="panel-tag">P(|x&rang;) = |&alpha;<sub>x</sub>|<sup>2</sup></span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="probabilityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel glass">
+                    <div class="panel-header">
+                        <h3>Quantum State Vector &amp; Amplitudes</h3>
+                        <span class="panel-tag">Complex Basis States</span>
+                    </div>
+                    <div class="table-scroll">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Basis State</th>
+                                    <th>Amplitude (&alpha;)</th>
+                                    <th>Magnitude |&alpha;|</th>
+                                    <th>Probability</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stateVectorTableBody">
+                                <tr>
+                                    <td colspan="4" class="empty-cell">Execute a circuit to inspect state amplitudes.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step-by-Step Execution Trace -->
+            <div class="panel glass trace-panel">
+                <div class="panel-header">
+                    <h3>Step-by-Step Gate Impact Trace</h3>
+                    <span class="panel-tag">How each gate transforms |&psi;&rang;</span>
+                </div>
+                <div id="executionTraceList" class="trace-list">
+                    <div class="empty-cell">Gate-by-gate state evolution will appear here after execution.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: QUANTUM GATE LIBRARY -->
+        <section id="library" class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Quantum Gate Library</h2>
+                    <p class="section-subtitle">
+                        Unitary operators implemented in C++ via inheritance and polymorphism from the <code>QuantumGate</code> base class.
+                    </p>
+                </div>
+            </div>
+            <div id="gateLibraryGrid" class="gate-library-grid">
+                <!-- Populated dynamically from GET /api/gates -->
+            </div>
+        </section>
+
+        <!-- SECTION 5: ABOUT SECTION -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">About Quantum Lite</h2>
+                    <p class="section-subtitle">
+                        BCA 3rd Semester Minor Project — Jaypee Institute of Information Technology (JIIT)
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-grid">
+                <div class="panel glass">
+                    <h3>Project Overview &amp; Objectives</h3>
+                    <p>
+                        <strong>Quantum Lite</strong> bridges the gap between abstract linear-algebraic quantum mechanics
+                        and hands-on experimentation. Built for beginners learning quantum computing, it lets students
+                        design circuits visually while delegating all complex matrix and state-vector calculations to a
+                        modular C++17 simulation engine.
+                    </p>
+                    <ul class="about-list">
+                        <li>Create, resize, and reset multi-qubit quantum circuits interactively.</li>
+                        <li>Apply Hadamard, Pauli-X, Pauli-Y, Pauli-Z, and two-qubit CNOT gates.</li>
+                        <li>Compute normalized complex probability amplitudes using C++ OOP.</li>
+                        <li>Visualize measurement probabilities and step-by-step gate transformations.</li>
+                    </ul>
+                </div>
+
+                <div class="panel glass">
+                    <h3>Technology Stack</h3>
+                    <div class="tech-tags">
+                        <span class="tech-tag">C++17 (OOP)</span>
+                        <span class="tech-tag">Crow Web Framework</span>
+                        <span class="tech-tag">JSON REST API</span>
+                        <span class="tech-tag">std::complex&lt;double&gt;</span>
+                        <span class="tech-tag">CMake Build System</span>
+                        <span class="tech-tag">HTML5 &amp; CSS3</span>
+                        <span class="tech-tag">Vanilla JavaScript</span>
+                        <span class="tech-tag">Chart.js</span>
+                    </div>
+                    <h4 class="sub-heading">Academic Details</h4>
+                    <p class="meta-text">
+                        <strong>Institute:</strong> Jaypee Institute of Information Technology (JIIT)<br />
+                        <strong>Course:</strong> Bachelor of Computer Applications (BCA)<br />
+                        <strong>Subject:</strong> C++ Using OOPS (23B65CA215) &bull; ODD, III Semester<br />
+                        <strong>Academic Session:</strong> 2026&ndash;27
+                    </p>
+                </div>
+            </div>
+
+            <div class="panel glass team-panel">
+                <h3>Project Team Members</h3>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar">TG</div>
+                        <div>
+                            <h4>Tanishq Gupta</h4>
+                            <span class="mono">992505170075 &bull; BCA3</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">TT</div>
+                        <div>
+                            <h4>Tanmay Thakur</h4>
+                            <span class="mono">992505170082 &bull; BCA3</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">AR</div>
+                        <div>
+                            <h4>Abhinav Rathore</h4>
+                            <span class="mono">992505170061 &bull; BCA3</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar">RS</div>
+                        <div>
+                            <h4>Rajat Singh</h4>
+                            <span class="mono">992505170083 &bull; BCA3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Quantum Lite &bull; JIIT BCA III Semester Minor Project (2026&ndash;27) &bull; Powered by C++17 &amp; Crow</p>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/circuit.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
